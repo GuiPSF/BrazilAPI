@@ -1,0 +1,12 @@
+/* src/index.css */
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-50 antialiased;
+  }
+
+  a {
+    @apply text-sky-400 hover:text-sky-300 transition-colors;
+  }
+}
