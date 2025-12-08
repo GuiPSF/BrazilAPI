@@ -60,10 +60,10 @@ export default function Cep() {
     }
   }, [params.cep]);
 
-  const rua = data?.street || data?.logradouro || "Não informado";
-  const bairro = data?.neighborhood || data?.bairro || "Não informado";
-  const cidade = data?.city || data?.cidade || "Não informado";
-  const estado = data?.state || data?.uf || "Não informado";
+  const rua = data?.street || "Não informado";
+  const bairro = data?.neighborhood || "Não informado";
+  const cidade = data?.city || "Não informado";
+  const estado = data?.state || "Não informado";
   const cepResultado = data?.cep || cep || "Não informado";
 
   const hasAddress =
