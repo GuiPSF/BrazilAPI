@@ -5,7 +5,7 @@ export default function Brokers() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState(null);
 
-  const [cityFilter, setCityFilter] = useState(""); // filtro por município
+  const [cityFilter, setCityFilter] = useState("");
 
   const loadBrokers = async () => {
     try {
@@ -41,10 +41,8 @@ export default function Brokers() {
     return {
       nome:
         item.nome_social ||
-        item.nome_comercial ||
-        item.name ||
-        "Nome não informado",
-      cidade: item.municipio || item.cidade || item.city || "",
+        item.nome_comercial,
+      cidade: item.municipio || "",
       cnpj: item.cnpj || "",
     };
   };
@@ -56,7 +54,6 @@ export default function Brokers() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
 
-  // lista de municípios únicos para o filtro (select)
   const cities = useMemo(() => {
     const set = new Set();
     data.forEach((item) => {
@@ -66,7 +63,6 @@ export default function Brokers() {
     return Array.from(set).sort((a, b) => a.localeCompare(b, "pt-BR"));
   }, [data]);
 
-  // aplica apenas filtro de município
   const filteredData = useMemo(() => {
     const city = normalize(cityFilter.trim());
     return data.filter((item) => {
@@ -84,23 +80,16 @@ export default function Brokers() {
 
   return (
     <div className="space-y-6">
-      {/* Cabeçalho */}
       <header className="space-y-3">
         <h1 className="text-2xl font-semibold text-slate-50">
           Catálogo de Corretoras
         </h1>
         <p className="text-sm text-slate-400 max-w-xl">
-          Lista de corretoras consumida via backend Node-RED, filtrável por
-          município.
+          Catálogo de corretoras, filtrável por município.
         </p>
       </header>
 
-      {/* Status + contagem */}
       <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300">
-        <span className="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          Node-RED · GET /brokers
-        </span>
 
         <span className="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1">
           {loading
@@ -117,7 +106,6 @@ export default function Brokers() {
         )}
       </div>
 
-      {/* Filtro de município + botão limpar filtro */}
       <section className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-1 max-w-sm w-full">
@@ -137,8 +125,7 @@ export default function Brokers() {
               ))}
             </select>
             <p className="text-[11px] text-slate-500">
-              Selecione um município para ver apenas as corretoras daquela
-              região.
+              Selecione um município para ver apenas as corretoras daquela região.
             </p>
           </div>
 
@@ -154,7 +141,6 @@ export default function Brokers() {
         </div>
       </section>
 
-      {/* Grid de cards – 5 colunas no desktop */}
       <section className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
         {(!data || data.length === 0) && !loading ? (
           <p className="text-sm text-slate-500">

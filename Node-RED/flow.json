@@ -1,0 +1,136 @@
+[
+    {
+        "id": "e1717e14bf916474",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f29e372d811decb0",
+        "type": "http in",
+        "z": "e1717e14bf916474",
+        "name": "GET /brokers",
+        "url": "/brokers",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "e1f5275a47d634ce"
+            ]
+        ]
+    },
+    {
+        "id": "e1f5275a47d634ce",
+        "type": "http request",
+        "z": "e1717e14bf916474",
+        "name": "Fetch Brokers",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://brasilapi.com.br/api/cvm/corretoras/v1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "71e9af83a934a301"
+            ]
+        ]
+    },
+    {
+        "id": "71e9af83a934a301",
+        "type": "http response",
+        "z": "e1717e14bf916474",
+        "name": "Return Brokers JSON",
+        "statusCode": "",
+        "headers": {},
+        "x": 800,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0435e94068a8b5b0",
+        "type": "http in",
+        "z": "e1717e14bf916474",
+        "name": "GET /cep/v2/:zipcode",
+        "url": "/cep/v2/:zipcode",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 100,
+        "wires": [
+            [
+                "89c7e7eb3f76bf57"
+            ]
+        ]
+    },
+    {
+        "id": "89c7e7eb3f76bf57",
+        "type": "function",
+        "z": "e1717e14bf916474",
+        "name": "Build CEP URL",
+        "func": "const cep = msg.req.params.zipcode;\nmsg.url = `https://brasilapi.com.br/api/cep/v2/${cep}`;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 100,
+        "wires": [
+            [
+                "4abae57a3ff326ad"
+            ]
+        ]
+    },
+    {
+        "id": "4abae57a3ff326ad",
+        "type": "http request",
+        "z": "e1717e14bf916474",
+        "name": "Fetch CEP",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 830,
+        "y": 100,
+        "wires": [
+            [
+                "078e64f62064e498"
+            ]
+        ]
+    },
+    {
+        "id": "078e64f62064e498",
+        "type": "http response",
+        "z": "e1717e14bf916474",
+        "name": "Return CEP JSON",
+        "statusCode": "",
+        "headers": {},
+        "x": 1130,
+        "y": 100,
+        "wires": []
+    }
+]

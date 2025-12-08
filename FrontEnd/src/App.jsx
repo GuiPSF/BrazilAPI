@@ -60,8 +60,8 @@ function Layout({ children }) {
         </main>
 
         <footer className="border-t border-slate-800 bg-slate-950/80">
-          <div className="mx-auto max-w-6xl px-4 py-3 text-xs text-slate-500 flex items-center justify-between">
-            <span>BrazilAPI Explorer</span>
+          <div className="mx-auto max-w-6xl px-4 py-3 text-xs text-slate-500 flex items-center justify-center">
+            <span>App created using Node-RED for Backend and React for Frontend</span>
           </div>
         </footer>
       </div>
@@ -76,7 +76,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/brokers" element={<Brokers />} />
+          {/* sem CEP */}
           <Route path="/cep" element={<Cep />} />
+          {/* com CEP como URL param */}
+          <Route path="/cep/:cep" element={<Cep />} />
         </Routes>
       </Layout>
     </BrowserRouter>
